@@ -37,8 +37,21 @@ switch (command) {
 
 function concertThis () {
     console.log("concert function");
-}
-// * `concert-this` FUNCTION
+    var queryUrl = "https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp";
+    axios.get(queryUrl).then(
+        function(response) {
+          console.log(`data ${response.data[0].venue}`)
+                  
+});
+// *  CANNOT FIGURE OUT HOW TO DIG INTO THE RESPONSE
+    //  Venue Name: ${data.venue[0]}
+// Date of the Event: ${data.datetime}`)concert-this` FUNCTION       Venue Location: ${}   Venue Name: ${response.data.venue}
+// * This will search the Bands in Town Artist Events API (`"https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"`) for an artist and render the following information about each event to the terminal:
+// * Name of the venue
+// * Venue location
+// * Date of the Event (use moment to format this as "MM/DD/YYYY")
+
+
 function spotifyThis () {
     console.log("spotify function");
 
@@ -49,11 +62,19 @@ spotify.search({ type: 'track',
       return console.log('Error occurred: ' + err);
     }
    
-  console.log("Artists:" + data.tracks.items[0].artists[0].name); 
-  console.log("Preview Link:" + data.tracks.items[0].preview_url); 
-  });
+  console.log(`data: ${data}
+        Artists: ${data.tracks.items[0].artists[0].name}
+        Song Name: ${data.tracks.items[0].name}
+        Preview Link: ${data.tracks.items[0].preview_url}
+        Album Name: ${data.tracks.items[0].album.name}`);
+
+        console.log("items", data.tracks.items[0])
+
+// * If no song is provided then your program will default to "The Sign" by Ace of Base.
+
+  }) 
 }
-//    * `spotify-this-song` FUNCTION
+//    * `spotify-this-song` FUNCTION//still need the default to "The sign" if it doesn't work
 function movieThis () {
     console.log("movie function");
     var queryUrl = "http://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy";
@@ -69,9 +90,14 @@ function movieThis () {
            Actors ${response.data.Actors}`);
       })
 }
-//    * `movie-this` FUNCTION
+
 function doWhatItSays () {
     console.log("doWhatItSays function");
+    fs.readFile("random.txt", "utf8", function(err, data) {
+        // If there's an error reading the file, we log it and return immediately
+        if (err) {
+          return console.log(err);
+        }
     
-}
+}};
 //    * `do-what-it-says`
