@@ -9,7 +9,7 @@ require("dotenv").config();
 var keys = require("./keys.js")
 var spotify = new Spotify(keys.spotify);
 var command = process.argv[2];
-var userInput = process.argv.slice(3); 
+var userInput = process.argv.slice(3).join("+"); 
 
 
 function switchCommand (demand, userType) {
@@ -19,7 +19,7 @@ switch (demand) {
     break; 
 
     case "spotify-this":
-    spotifyThis (userType);
+    spotifyThis(userType);
     break;
 
     case "movie-this":
@@ -33,9 +33,9 @@ switch (demand) {
     console.log("Please give a valid entry.")
 }}
 
-function concertThis () {
+function concertThis (userType) {
     console.log("concert function");
-    var queryUrl = "https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp";
+    var queryUrl = "https://rest.bandsintown.com/artists/" + userType + "/events?app_id=codingbootcamp";
     axios.get(queryUrl).then(
         function(response) {
         //   console.log(response.data[0].venue)
@@ -49,39 +49,43 @@ function concertThis () {
 // *  //use a for loop to dig into the array response CANNOT FIGURE OUT HOW TO DIG INTO THE RESPONSE
     //  Venue Name: ${data.venue[0]}
 // Date of the Event: ${data.datetime}`)concert-this` FUNCTION       Venue Location: ${}   Venue Name: ${response.data.venue}
-// * This will search the Bands in Town Artist Events API (`"https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp"`) for an artist and render the following information about each event to the terminal:
+
 // * Name of the venue
 // * Venue location
 // * Date of the Event (use moment to format this as "MM/DD/YYYY")
 
 
-function spotifyThis () {
-    console.log("spotify function");
-
+function spotifyThis (userType) {
+    console.log(userType);
+    if (userInput === ("")) {
+        (userType = "The Sign")
+    }
 spotify.search({ type: 'track', 
-                query: userInput, 
+                query: userType, 
                 limit: 2}, function(err, data) {
     if (err) {
-      return console.log('Error occurred: ' + err);
+      return console.log(err);
     }
-   
-  console.log(`
-        Artists: ${data.tracks.items[0].artists[0].name}\n
-        Song Name: ${data.tracks.items[0].name}\n
-        Preview Link: ${data.tracks.items[0].preview_url}\n
-        Album Name: ${data.tracks.items[0].album.name}`);
-
-        // console.log("items", data.tracks.items[0])
+    console.log("items", data.tracks.items[0])
+        console.log(typeof data);
+//   console.log(`
+//         Artists: ${data.tracks.items[0].artists[0].name}\n
+//         Song Name: ${data.tracks.items[0].name}\n
+//         Preview Link: ${data.tracks.items[0].preview_url}\n
+//         Album Name: ${data.tracks.items[0].album.name}`);
 
 // * If no song is provided then your program will default to "The Sign" by Ace of Base.
   }) 
 }
-//    * `spotify-this-song` FUNCTION//still need the default to "The sign" if it doesn't work
 
 
-function movieThis () {
-    console.log("movie function");
-    var queryUrl = "http://www.omdbapi.com/?t=" + userInput + "&y=&plot=short&apikey=trilogy";
+
+function movieThis (userType) {
+    console.log(userType);
+    if (userInput === ("")) {
+        (userType = "Mr. Nobody")
+    } 
+    var queryUrl = "http://www.omdbapi.com/?t=" + userType + "&y=&plot=short&apikey=trilogy";
     axios.get(queryUrl).then(
         function(response) {
           console.log(`Movie Title: ${response.data.Title}\n
@@ -93,7 +97,7 @@ function movieThis () {
            Plot: ${response.data.Plot}\n
            Actors ${response.data.Actors}`);
       })
-}
+} 
 
 function doWhatItSays () {
     console.log("doWhatItSays function");
@@ -106,5 +110,3 @@ function doWhatItSays () {
 })};
 
 switchCommand(command, userInput);
-
-//i tried to call the switchCommand with this in there and w/nothing in there; no dice either way.
