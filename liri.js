@@ -3,31 +3,31 @@
 var Spotify = require("node-spotify-api");
 var axios = require("axios");
 var moment = require("moment");
-
+var fs = require("fs");
 require("dotenv").config();
 
 var keys = require("./keys.js")
 var spotify = new Spotify(keys.spotify);
 var command = process.argv[2];
 var userInput = process.argv.slice(3); 
-var fs = require("fs");
+
 
 function switchCommand (demand, userType) {
-switch (command) { 
+switch (demand) { 
     case "concert-this":
-    concertThis(demand, userType);
+    concertThis(userType);
     break; 
 
     case "spotify-this":
-    spotifyThis (demand, userType);
+    spotifyThis (userType);
     break;
 
     case "movie-this":
-    movieThis(demand, userType);
+    movieThis(userType);
     break;
 
     case "do-what-it-says":
-    doWhatItSays(demand, userType);
+    doWhatItSays();
     break;
     default: 
     console.log("Please give a valid entry.")
@@ -46,11 +46,6 @@ function concertThis () {
             }
 })};
 
-
-// var i;
-// for (i = 0; i < cars.length; i++) { 
-//   text += cars[i] + "<br>";
-// }
 // *  //use a for loop to dig into the array response CANNOT FIGURE OUT HOW TO DIG INTO THE RESPONSE
     //  Venue Name: ${data.venue[0]}
 // Date of the Event: ${data.datetime}`)concert-this` FUNCTION       Venue Location: ${}   Venue Name: ${response.data.venue}
@@ -107,5 +102,9 @@ function doWhatItSays () {
           return console.log(err);
         }  
         console.log(data);
-        console.log(typeofdata);
+        console.log(typeof data);
 })};
+
+switchCommand(command, userInput);
+
+//i tried to call the switchCommand with this in there and w/nothing in there; no dice either way.
