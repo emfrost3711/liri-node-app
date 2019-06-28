@@ -39,12 +39,20 @@ function concertThis (userType) {
     axios.get(queryUrl).then(
         function(response) {
         //   console.log(response.data[0].venue)
-        console.log("items", data.tracks.items[0])
-            for (var i = 0; i < response.data.length; i++) {
-                console.log(response.data[i]);
-                console.log(`Venue Name: $(response.data[i].venue.name)`)
+        for (var i = 0; i < response.data.length; i++) {
+        console.log(`
+        Venue Name: ${response.data[i].venue.name}\n
+        City: ${response.data[i].venue.city}\n
+        Region: ${response.data[i].venue.region}\n
+        Country: ${response.data[i].venue.country}\n
+        Date: moment().format('L')${response.data[i].datetime}\n
+        \n------------------------------------------------------------\n\n`);
             }
-})};
+        })};
+
+              //     console.log(response);
+                // console.log(response.data[i]);
+                // console.log(`Venue Name: $(response.data[i].venue.name)`)
 
 // *  //use a for loop to dig into the array response CANNOT FIGURE OUT HOW TO DIG INTO THE RESPONSE
     //  Venue Name: ${data.venue[0]}
@@ -52,6 +60,7 @@ function concertThis (userType) {
 
 // * Name of the venue
 // * Venue location
+// Date: 2019-10-27T19:00:00
 // * Date of the Event (use moment to format this as "MM/DD/YYYY")
 
 
@@ -62,22 +71,17 @@ function spotifyThis (userType) {
     }
 spotify.search({ type: 'track', 
                 query: userType, 
-                limit: 2}, function(err, data) {
+                limit: 1}, function(err, data) {
     if (err) {
       return console.log(err);
     }
-    console.log("items", data.tracks.items[0])
-        console.log(typeof data);
-//   console.log(`
-//         Artists: ${data.tracks.items[0].artists[0].name}\n
-//         Song Name: ${data.tracks.items[0].name}\n
-//         Preview Link: ${data.tracks.items[0].preview_url}\n
-//         Album Name: ${data.tracks.items[0].album.name}`);
-
-// * If no song is provided then your program will default to "The Sign" by Ace of Base.
+  console.log(`
+        Artists: ${data.tracks.items[0].album.artists[0].name}\n
+        Song Name: ${data.tracks.items[0].name}\n
+        Preview Link: ${data.tracks.items[0].preview_url}\n
+        Album Name: ${data.tracks.items[0].album.name}`);
   }) 
 }
-
 
 
 function movieThis (userType) {
@@ -91,7 +95,7 @@ function movieThis (userType) {
           console.log(`Movie Title: ${response.data.Title}\n
            Movie Year: ${response.data.Year}\n
            IMDB Rating: ${response.data.imdbRating}\n
-           Rotten: ${response.data.Ratings[1].Value}\n
+           Rotten Tomatoes Rating: ${response.data.Ratings[1].Value}\n
            Country produced: ${response.data.Country}\n
            Language: ${response.data.Language}\n
            Plot: ${response.data.Plot}\n
