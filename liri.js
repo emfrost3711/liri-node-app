@@ -37,6 +37,9 @@ function concertThis(userType) {
     var queryUrl = "https://rest.bandsintown.com/artists/" + userType + "/events?app_id=codingbootcamp";
     axios.get(queryUrl).then(
         function (response) {
+            if (response.data.length === 0) {
+                console.log("No upcoming concerts.");
+            } else {
             for (var i = 0; i < response.data.length; i++) {
                 var date = moment(response.data[i].datetime);
                 console.log(`
@@ -47,7 +50,7 @@ function concertThis(userType) {
         Date: ${date.format("L")}\n
         \n------------------------------------------------------------\n\n`);
             }
-        }
+        }}
     )
 };
 
@@ -106,7 +109,6 @@ function movieThis(userType) {
 };
 
 
-//i have no idea what to do here.
 function doWhatItSays() {
     console.log("doWhatItSays function");
     fs.readFile("random.txt", "utf8", function (err, data) {
@@ -123,3 +125,6 @@ function doWhatItSays() {
 };
 
 switchCommand(command, userInput);
+
+
+// use kap to make gifs; then put the gifs into the readme. 
