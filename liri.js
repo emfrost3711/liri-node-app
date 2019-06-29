@@ -55,21 +55,27 @@ function concertThis(userType) {
 
 //not working (try here comes the sun); how to use for loop to dig into artists, too? also finds the wrong the sign as the default.
 function spotifyThis(userType) {
-    console.log(userType);
-    if (userInput === ("")) {
+    userType = userType.split("+").join(" ");
+    console.log (userType);
+    if (userType === ("")) {
         (userType = "The Sign")
     }
     spotify.search({
         type: 'track',
         query: userType,
-        limit: 1
+        limit: 2
     }, function (err, data) {
         if (err) {
             return console.log(err);
         }   else {
+            // console.log(data.tracks.items[0].artists);
             for (var i = 0; i < data.tracks.items.length; i++) {
+                var artistsText = ""; 
+                for (var j = 0; j < data.tracks.items[i].artists.length; j++) {
+                    artistsText += data.tracks.items[i].artists[j].name + " "
+                }
         console.log(`
-        Artists: ${data.tracks.items[i].album.artists[i].name}\n
+        Artists: ${artistsText}\n
         Song Name: ${data.tracks.items[i].name}\n
         Preview Link: ${data.tracks.items[i].preview_url}\n
         Album Name: ${data.tracks.items[i].album.name}\n
@@ -81,7 +87,7 @@ function spotifyThis(userType) {
 
 function movieThis(userType) {
     console.log(userType);
-    if (userInput === ("")) {
+    if (userType === ("")) {
         (userType = "Mr. Nobody")
     }
     var queryUrl = "http://www.omdbapi.com/?t=" + userType + "&y=&plot=short&apikey=trilogy";
@@ -107,8 +113,11 @@ function doWhatItSays() {
         if (err) {
             return console.log(err);
         }
+        var dataArray = data.split(", ");
+        console.log(dataArray);
         console.log(data);
         console.log(typeof data);
+        switchCommand(dataArray[0], dataArray[1]);
         
     })
 };
