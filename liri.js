@@ -33,7 +33,9 @@ function switchCommand(demand, userType) {
 };
 
 function concertThis(userType) {
-    console.log("concert function");
+    if (userType === ("")) {
+        console.log("Please enter an artist to search.")}
+        else {
     var queryUrl = "https://rest.bandsintown.com/artists/" + userType + "/events?app_id=codingbootcamp";
     axios.get(queryUrl).then(
         function (response) {
@@ -52,14 +54,11 @@ function concertThis(userType) {
             }
         }}
     )
-};
+}};
 
 
-
-//not working (try here comes the sun); how to use for loop to dig into artists, too? also finds the wrong the sign as the default.
 function spotifyThis(userType) {
     userType = userType.split("+").join(" ");
-    console.log (userType);
     if (userType === ("")) {
         (userType = "The Sign")
     }
@@ -71,7 +70,6 @@ function spotifyThis(userType) {
         if (err) {
             return console.log(err);
         }   else {
-            // console.log(data.tracks.items[0].artists);
             for (var i = 0; i < data.tracks.items.length; i++) {
                 var artistsText = ""; 
                 for (var j = 0; j < data.tracks.items[i].artists.length; j++) {
@@ -89,7 +87,6 @@ function spotifyThis(userType) {
 
 
 function movieThis(userType) {
-    console.log(userType);
     if (userType === ("")) {
         (userType = "Mr. Nobody")
     }
@@ -110,7 +107,6 @@ function movieThis(userType) {
 
 
 function doWhatItSays() {
-    console.log("doWhatItSays function");
     fs.readFile("random.txt", "utf8", function (err, data) {
         if (err) {
             return console.log(err);
@@ -120,11 +116,8 @@ function doWhatItSays() {
         console.log(data);
         console.log(typeof data);
         switchCommand(dataArray[0], dataArray[1]);
-        
     })
 };
 
 switchCommand(command, userInput);
 
-
-// use kap to make gifs; then put the gifs into the readme. 
