@@ -39,29 +39,18 @@ function concertThis (userType) {
     axios.get(queryUrl).then(
         function(response) {
         //   console.log(response.data[0].venue)
+       
         for (var i = 0; i < response.data.length; i++) {
+            var date = moment(response.data[i].datetime);
         console.log(`
         Venue Name: ${response.data[i].venue.name}\n
         City: ${response.data[i].venue.city}\n
         Region: ${response.data[i].venue.region}\n
         Country: ${response.data[i].venue.country}\n
-        Date: moment().format('L')${response.data[i].datetime}\n
+        Date: ${date.format("L")}\n
         \n------------------------------------------------------------\n\n`);
             }
         })};
-
-              //     console.log(response);
-                // console.log(response.data[i]);
-                // console.log(`Venue Name: $(response.data[i].venue.name)`)
-
-// *  //use a for loop to dig into the array response CANNOT FIGURE OUT HOW TO DIG INTO THE RESPONSE
-    //  Venue Name: ${data.venue[0]}
-// Date of the Event: ${data.datetime}`)concert-this` FUNCTION       Venue Location: ${}   Venue Name: ${response.data.venue}
-
-// * Name of the venue
-// * Venue location
-// Date: 2019-10-27T19:00:00
-// * Date of the Event (use moment to format this as "MM/DD/YYYY")
 
 
 function spotifyThis (userType) {
