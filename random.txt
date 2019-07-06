@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-spotify-this, I Want It That Way
-=======
 spotify-this, "I Want it That Way"
->>>>>>> e851a51a1062a882098d05884461084b7e431a1b
